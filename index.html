@@ -515,7 +515,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 .pm-close:hover{opacity:1}
 /* LEFT – photo */
 .pm-left{width:42%;min-width:42%;position:relative;overflow:hidden;background:#0a0a0a}
-.pm-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block}
+.pm-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:opacity .25s}
 .pm-hero-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 55%)}
 /* RIGHT – content */
 .pm-right{flex:1;display:flex;flex-direction:column;overflow:hidden}
@@ -1205,8 +1205,15 @@ function openPM(id) {
   const b = bands[id];
   if (!b) return;
   const photoEl = document.getElementById('pm-photo');
-  photoEl.src = b.photo || '';
-  photoEl.style.display = b.photo ? 'block' : 'none';
+  photoEl.style.opacity = '0';
+  photoEl.src = '';
+  if (b.photo) {
+    photoEl.style.display = 'block';
+    photoEl.onload = function() { photoEl.style.opacity = '1'; };
+    photoEl.src = b.photo;
+  } else {
+    photoEl.style.display = 'none';
+  }
   document.getElementById('pm-name').textContent = b.name || id.toUpperCase();
   const dayStr = (b.weekday && b.day) ? b.weekday + ', ' + b.day : (b.day || b.weekday || '');
   document.getElementById('pm-day').textContent = dayStr;
