@@ -113,10 +113,10 @@ section{padding:80px 32px}
 .acc-chevron{transition:transform .25s ease;display:inline-block;transform-origin:center}
 .acc-toggle:checked + .ticket-group-label .acc-chevron{transform:rotate(180deg)}
 .ticket-grid{display:grid;grid-template-columns:1fr;gap:0;border:none}
-.ticket-grid-day{display:grid;grid-template-columns:1fr;gap:0;border:none}
+.ticket-grid-day{display:grid;grid-template-columns:1fr;gap:20px;border:none;padding:20px}
 .ticket-grid-small{display:grid;grid-template-columns:1fr;gap:0;border:none;border-top:none}
 .ticket-grid-addon{display:grid;grid-template-columns:1fr;gap:0;border:none}
-.ticket-grid > .tc,.ticket-grid-day > .tc,.ticket-grid-addon > .tc{border-top:1px solid rgba(255,255,255,0.06)}
+.ticket-grid > .tc,.ticket-grid-addon > .tc{border-top:1px solid rgba(255,255,255,0.06)}.ticket-grid-day > .tc{border:1px solid rgba(255,196,0,0.15);border-radius:14px;overflow:hidden}
 .ticket-grid > .tc:first-child,.ticket-grid-day > .tc:first-child,.ticket-grid-addon > .tc:first-child{border-top:none}
 .ticket-header{margin-bottom:0;line-height:1.5}
 
