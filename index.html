@@ -1290,6 +1290,7 @@ function closePM() {
 
 // Equalize napijegy (ticket-grid-day) card heights
 function equalizeNapijegyCards() {
+  if (window.innerWidth < 900) return;
   var cards = document.querySelectorAll('.ticket-grid-day .tc.tc-split');
   if (!cards.length) return;
   cards.forEach(function(c) {
