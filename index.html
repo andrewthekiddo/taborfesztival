@@ -1364,14 +1364,15 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   e.preventDefault();
   var btn = document.getElementById('contact-submit');
   var status = document.getElementById('contact-status');
-  var formId = 'FORMSPREE_ID'; // <- cseréld le a Formspree form ID-ra
+  var data = Object.fromEntries(new FormData(this));
+  data._subject = data.subject || 'Üzenet a táborfesztival.hu oldalról';
   btn.textContent = 'Küldés...';
   btn.disabled = true;
   try {
-    var res = await fetch('https://formspree.io/f/' + formId, {
+    var res = await fetch('https://formsubmit.co/ajax/info@taborfesztival.hu', {
       method: 'POST',
       headers: {'Content-Type': 'application/json', 'Accept': 'application/json'},
-      body: JSON.stringify(Object.fromEntries(new FormData(this)))
+      body: JSON.stringify(data)
     });
     if (res.ok) {
       status.style.color = 'rgba(255,196,0,0.9)';
