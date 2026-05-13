@@ -170,14 +170,14 @@ section{padding:80px 32px}
 /* BAND LOGOS */
 #fellepok{background:var(--red)}
 .blogrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border)}
-.bloc{background:rgba(150,0,15,0.25);display:flex;align-items:center;justify-content:center;padding:26px 16px;min-height:88px;cursor:pointer;transition:background .2s}
+.bloc{background:rgba(150,0,15,0.25);display:flex;align-items:center;justify-content:center;padding:14px 10px;min-height:72px;cursor:pointer;transition:background .2s}
 .bloc:hover{background:rgba(220,0,25,0.5)}
 .bltxt{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;transition:color .2s}
 .bloc:hover .bltxt{color:var(--text)}
 
 .band-logo-img {
   max-width: 100%;
-  max-height: 78px;
+  max-height: 98px;
   object-fit: contain;
   mix-blend-mode: screen;
   opacity: 0.9;
@@ -446,7 +446,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 .fellepo-col{background:rgba(180,0,20,0.15);display:flex;flex-direction:column;border-right:1px solid rgba(255,255,255,0.15)}
 .fellepo-header{background:none;padding:14px 18px;text-align:center;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#fff}.fellepo-dates{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-bottom:16px}.fellepo-date-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0;gap:8px;border-right:1px solid rgba(255,255,255,0.15)}.fellepo-day-name{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.7)}.fellepo-date-img{height:44px;width:auto;object-fit:contain;display:block}@media(max-width:900px){.fellepo-dates{grid-template-columns:1fr 1fr}}@media(max-width:600px){.fellepo-dates{grid-template-columns:1fr}}
 .fellepo-logos{display:flex;flex-direction:column;flex:1}
-.fellepo-logos .bloc{border-bottom:1px solid rgba(255,255,255,0.1);min-height:72px}
+.fellepo-logos .bloc{border-bottom:1px solid rgba(255,255,255,0.1);min-height:60px}
 .fellepo-logos .bloc:last-child{border-bottom:none}
 .fellepo-wrap{width:100%}@media(max-width:900px){.fellepo-grid{grid-template-columns:1fr 1fr}}@media(max-width:600px){.fellepo-grid{grid-template-columns:1fr}}@media(max-width:700px){.fellepo-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.fellepo-dates,.fellepo-grid{grid-template-columns:repeat(4,minmax(130px,1fr));min-width:520px}.fellepo-day-name{font-size:14px;letter-spacing:1px}.fellepo-date-img{height:40px;width:100%;max-width:100%;object-fit:contain}.bloc{padding:20px 8px;min-height:70px}}
 
@@ -595,7 +595,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 
 <!-- HERO -->
 <section class="hero" id="kezdolap">
-  <video autoplay muted loop playsinline class="hero-video">
+  <video autoplay muted loop playsinline webkit-playsinline class="hero-video">
     <source src="fekvo_LOW_v2.mp4" type="video/mp4">
   </video>
   <div class="hero-overlay"></div>
