@@ -515,7 +515,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 .pm-close:hover{opacity:1}
 /* LEFT – photo */
 .pm-left{width:42%;min-width:42%;position:relative;overflow:hidden;background:#0a0a0a}
-.pm-photo{width:100%;height:100%;object-fit:cover;-webkit-object-fit:cover;object-position:center top;-webkit-object-position:center top;display:block;transition:opacity .25s}
+.pm-photo{position:absolute;top:0;left:0;right:0;bottom:0;width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:opacity .25s}
 .pm-hero-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 55%)}
 /* RIGHT – content */
 .pm-right{flex:1;display:flex;flex-direction:column;overflow:hidden}
@@ -568,7 +568,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
         <a href="#berlet">Heti Bérlet</a>
         <a href="#hetvegi">Hétvégi Jegy</a>
         <a href="#napi">Napijegy</a>
-        <a href="#kiegeszito">Kiegészítők</a>
+        <a href="#kiegeszito">Kiegészítő Jegyek</a>
       </div>
     </div>
     <a href="#fellepok">Program</a>
@@ -1391,6 +1391,14 @@ document.getElementById('contact-form').addEventListener('submit', async functio
 });
 </script>
 <script>
+// Nav dropdown: auto-open accordion on click
+document.querySelectorAll('.nav-dropdown a[href^="#"]').forEach(function(link) {
+  link.addEventListener('click', function() {
+    var id = this.getAttribute('href').substring(1);
+    var cb = document.getElementById('acc-' + id);
+    if (cb) cb.checked = true;
+  });
+});
 // Safari accordion fix
 document.querySelectorAll('.ticket-group-label').forEach(function(label) {
   label.addEventListener('click', function(e) {
