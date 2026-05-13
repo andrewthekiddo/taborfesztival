@@ -402,7 +402,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 
 
 /* ACCORDION TICKETS */
-.acc-toggle{display:none}
+.acc-toggle{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px}
 .ticket-acc-body{overflow:hidden;max-height:0;transition:max-height .45s cubic-bezier(0.4,0,0.2,1)}
 .acc-toggle:checked~.ticket-acc-body{max-height:4000px}
 .acc-chevron{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:2px solid rgba(255,196,0,0.4);border-radius:50%;font-size:14px;transition:transform .35s,border-color .2s;flex-shrink:0}
@@ -515,7 +515,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 .pm-close:hover{opacity:1}
 /* LEFT – photo */
 .pm-left{width:42%;min-width:42%;position:relative;overflow:hidden;background:#0a0a0a}
-.pm-photo{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;transition:opacity .25s}
+.pm-photo{width:100%;height:100%;object-fit:cover;-webkit-object-fit:cover;object-position:center top;-webkit-object-position:center top;display:block;transition:opacity .25s}
 .pm-hero-gradient{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.6) 0%,transparent 55%)}
 /* RIGHT – content */
 .pm-right{flex:1;display:flex;flex-direction:column;overflow:hidden}
@@ -544,7 +544,7 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 @media(max-width:720px){
   .pm-box{flex-direction:column;max-height:95vh;overflow:hidden}
   .pm-left{width:100%;min-width:unset;height:52vw;max-height:260px}
-  .pm-photo{object-fit:contain;object-position:center;background:#0a0a0a}
+  .pm-photo{object-fit:contain;-webkit-object-fit:contain;object-position:center;-webkit-object-position:center;background:#0a0a0a}
   .pm-scroll-area{padding:20px 20px 0}
   .pm-footer{padding:12px 20px 20px}
 }
@@ -1389,6 +1389,20 @@ document.getElementById('contact-form').addEventListener('submit', async functio
   btn.textContent = 'Küldés →';
   btn.disabled = false;
 });
+</script>
+<script>
+// Safari accordion fix
+document.querySelectorAll('.ticket-group-label').forEach(function(label) {
+  label.addEventListener('click', function(e) {
+    e.preventDefault();
+    var id = label.getAttribute('for');
+    var cb = document.getElementById(id);
+    if (cb) cb.checked = !cb.checked;
+  });
+});
+// Safari video autoplay fix
+var hv = document.querySelector('.hero-video');
+if (hv) hv.play().catch(function(){});
 </script>
 </body>
 </html>
