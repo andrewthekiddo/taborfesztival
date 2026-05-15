@@ -2,7 +2,7 @@
 // Sends events to Meta for server-side conversion tracking
 
 const PIXEL_ID = '940012236371499';
-const API_VERSION = 'v18.0';
+const API_VERSION = 'v21.0';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -43,7 +43,7 @@ export default async function handler(req, res) {
 
     // Send to Meta Conversions API
     const response = await fetch(
-      `https://graph.instagram.com/${API_VERSION}/${PIXEL_ID}/conversions`,
+      `https://graph.facebook.com/${API_VERSION}/${PIXEL_ID}/events`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
