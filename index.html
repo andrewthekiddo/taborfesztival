@@ -772,16 +772,16 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 <section id="galeria"><div class="section-inner">
   <div class="eyebrow">Emlékek</div>
   <h2 class="stitle">GALÉRIA</h2>
-  <div class="ygrid" id="gal-grid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="ycell"><img id="gal-img-0" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-0" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
-    <div class="ycell"><img id="gal-img-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-1" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
-    <div class="ycell"><img id="gal-img-2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-2" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
-    <div class="ycell"><img id="gal-img-3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-3" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
-  </div>
-  <div class="gal-nav">
-    <button class="gal-btn" id="gal-prev">&#8592;</button>
-    <span class="gal-counter" id="gal-counter"></span>
-    <button class="gal-btn" id="gal-next">&#8594;</button>
+  <div style="position:relative">
+    <button class="gal-btn" id="gal-prev" style="position:absolute;left:-56px;top:50%;transform:translateY(-50%);z-index:1">&#8592;</button>
+    <div class="ygrid" id="gal-grid" style="grid-template-columns:repeat(2,1fr)">
+      <div class="ycell"><img id="gal-img-0" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-0" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
+      <div class="ycell"><img id="gal-img-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-1" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
+      <div class="ycell"><img id="gal-img-2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-2" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
+      <div class="ycell"><img id="gal-img-3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-3" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
+    </div>
+    <button class="gal-btn" id="gal-next" style="position:absolute;right:-56px;top:50%;transform:translateY(-50%);z-index:1">&#8594;</button>
+    <span class="gal-counter" id="gal-counter" style="display:none"></span>
   </div>
 </div></section>
 
