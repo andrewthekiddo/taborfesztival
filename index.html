@@ -263,6 +263,11 @@ section{padding:80px 32px}
 .ycell:hover::before{transform:scaleY(1)}
 .ylabel{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:1px;color:rgba(255,255,255,0.9);position:relative;z-index:1;transition:color .25s}
 .ycell:hover .ylabel{color:#111}
+.gal-nav{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:16px}
+.gal-btn{background:none;border:1px solid var(--border);color:var(--text);font-size:18px;width:44px;height:44px;cursor:pointer;transition:border-color .2s,color .2s;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.gal-btn:hover{border-color:var(--red);color:var(--red)}
+.gal-btn:disabled{opacity:0.3;cursor:default;pointer-events:none}
+.gal-counter{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--muted);text-transform:uppercase;min-width:60px;text-align:center}
 
 
 #galeria .eyebrow{color:rgba(255,255,255,0.65)}
@@ -765,11 +770,16 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
 <section id="galeria"><div class="section-inner">
   <div class="eyebrow">Emlékek</div>
   <h2 class="stitle">GALÉRIA</h2>
-  <div class="ygrid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="ycell"><img src="KEP1.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
-    <div class="ycell"><img src="KEP2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
-    <div class="ycell"><img src="KEP3_V2.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
-    <div class="ycell"><img src="KEP4.JPG" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+  <div class="ygrid" id="gal-grid" style="grid-template-columns:repeat(2,1fr)">
+    <div class="ycell"><img id="gal-img-0" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+    <div class="ycell"><img id="gal-img-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+    <div class="ycell"><img id="gal-img-2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+    <div class="ycell"><img id="gal-img-3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"></div>
+  </div>
+  <div class="gal-nav">
+    <button class="gal-btn" id="gal-prev">&#8592;</button>
+    <span class="gal-counter" id="gal-counter"></span>
+    <button class="gal-btn" id="gal-next">&#8594;</button>
   </div>
 </div></section>
 
@@ -1410,6 +1420,40 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     if (cb) cb.checked = !cb.checked;
   });
 });
+// Gallery
+(function(){
+  var imgs = [
+    '0094_20240829_BD_872A6443.jpg','0099_20240829_BD_872A6496.jpg','0183_20240829_BD_872A7737.jpg',
+    '0276_20240829_BD_872A9326.jpg','20220826_150022770_iOS.jpg','20220826_161916150_iOS.jpg',
+    '20220826_163158400_iOS 2.jpg','20220826_184644870_iOS.jpg','20220827_010503000_iOS.jpg',
+    '20220827_162327040_iOS.jpg','20220827_194843440_iOS.jpg','20220827_195730310_iOS.jpg',
+    '20220827_204958080_iOS.jpg','20220827_212114000_iOS.jpg','20220827_213943930_iOS.jpg',
+    'BB_01046.jpg','BB_01075.jpg','BB_01087.jpg','BB_02340.jpg','BB_02869.jpg',
+    'BB_03860-Pokolgep.jpg','DJI_0824.jpg','IMG_9087.jpg','IMG_9088.jpg','IMG_9089.jpg',
+    'KATA0551.jpg','KATA0774(1).jpg','KATA0788.jpg','KATA1344.jpg','KATA1718.jpg',
+    'KATA2853.jpg','KATA3562.jpg','KATA4306.jpg','KATA5171.jpg','KATA5236.jpg',
+    'KATA5346.jpg','KATA5921.jpg','KATA7241.jpg','KATA7936.jpg','KATA8593.jpg',
+    'KATA9093.jpg','KATA9757.jpg','KATA9816.jpg','a20220827_010503000_iOS.jpg',
+    'gBB_01087.jpg','s20220827_010503000_iOS.jpg'
+  ];
+  var page = 0;
+  var per = 4;
+  var total = Math.ceil(imgs.length / per);
+  function render() {
+    for (var i = 0; i < per; i++) {
+      var el = document.getElementById('gal-img-' + i);
+      var f = imgs[page * per + i];
+      el.src = f ? 'galeria/' + encodeURIComponent(f) : '';
+      el.parentElement.style.visibility = f ? '' : 'hidden';
+    }
+    document.getElementById('gal-counter').textContent = (page + 1) + ' / ' + total;
+    document.getElementById('gal-prev').disabled = page === 0;
+    document.getElementById('gal-next').disabled = page >= total - 1;
+  }
+  document.getElementById('gal-prev').addEventListener('click', function(){ if(page>0){page--;render();} });
+  document.getElementById('gal-next').addEventListener('click', function(){ if(page<total-1){page++;render();} });
+  render();
+})();
 // Safari video autoplay fix
 var hv = document.querySelector('.hero-video');
 if (hv) hv.play().catch(function(){});
