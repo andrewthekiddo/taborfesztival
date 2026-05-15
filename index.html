@@ -1437,72 +1437,68 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     'KATA5346.jpg','KATA5921.jpg','KATA7241.jpg','KATA7936.jpg','KATA8593.jpg',
     'KATA9093.jpg','KATA9757.jpg','KATA9816.jpg','a20220827_010503000_iOS.jpg'
   ];
-  var page = 0, per = 4, lbIdx = 0;
-  var total = Math.ceil(imgs.length / per);
+
+  // Pair A = bal felső (0) + jobb alsó (3), Pair B = jobb felső (1) + bal alsó (2)
+  var PAIR_A = [0, 3];
+  var PAIR_B = [1, 2];
+  var cursor = 4;        // next image index to assign
+  var turn = 0;          // 0 = Pair A next, 1 = Pair B next
+  var cellImg = [0, 2, 3, 1]; // which img index each cell currently shows
   var autoTimer = null;
-  var animating = false;
+  var busy = false;
+  var lbIdx = 0;
 
-  function setCell(ci, p) {
-    var f = imgs[p * per + ci];
-    var el = document.getElementById('gal-img-' + ci);
-    el.src = f ? 'galeria/' + encodeURIComponent(f) : '';
-    el.parentElement.style.visibility = f ? '' : 'hidden';
+  function fi(i) { return ((i % imgs.length) + imgs.length) % imgs.length; }
+
+  function setCell(ci, imgIdx) {
+    imgIdx = fi(imgIdx);
+    cellImg[ci] = imgIdx;
+    document.getElementById('gal-img-' + ci).src = 'galeria/' + encodeURIComponent(imgs[imgIdx]);
   }
 
-  function updateNav() {
-    document.getElementById('gal-counter').textContent = (page + 1) + ' / ' + total;
-    document.getElementById('gal-prev').disabled = page === 0;
-    document.getElementById('gal-next').disabled = page >= total - 1;
-  }
-
-  function updateCells() {
-    for (var i = 0; i < per; i++) setCell(i, page);
-    updateNav();
-  }
-
-  function wipePair(indices, delay, target, done) {
-    setTimeout(function() {
-      indices.forEach(function(ci) {
-        var w = document.getElementById('gal-wipe-' + ci);
-        w.style.transition = 'transform 0.34s cubic-bezier(0.55,0,0.45,1)';
-        w.style.transform = 'scaleY(1)';
-      });
-      setTimeout(function() {
-        indices.forEach(function(ci) { setCell(ci, target); });
-        indices.forEach(function(ci) {
-          var w = document.getElementById('gal-wipe-' + ci);
-          w.style.transform = 'scaleY(0)';
-        });
-        if (done) done();
-      }, 350);
-    }, delay);
-  }
-
-  function goTo(p, animate) {
-    var target = ((p % total) + total) % total;
-    if (!animate) { page = target; updateCells(); return; }
-    if (animating) return;
-    animating = true;
-    // bal alsó (2) + jobb felső (1) egyszerre, majd bal felső (0) + jobb alsó (3)
-    wipePair([1, 2], 0, target, null);
-    wipePair([0, 3], 160, target, function() {
-      page = target;
-      updateNav();
-      animating = false;
+  function wipeSwap(cells, newIdx, done) {
+    if (busy) return;
+    busy = true;
+    cells.forEach(function(ci) {
+      var w = document.getElementById('gal-wipe-' + ci);
+      w.style.transition = 'transform 0.34s cubic-bezier(0.55,0,0.45,1)';
+      w.style.transform = 'scaleY(1)';
     });
+    setTimeout(function() {
+      cells.forEach(function(ci, i) { setCell(ci, newIdx[i]); });
+      cells.forEach(function(ci) {
+        document.getElementById('gal-wipe-' + ci).style.transform = 'scaleY(0)';
+      });
+      setTimeout(function() { busy = false; if (done) done(); }, 350);
+    }, 360);
+  }
+
+  function autoTick() {
+    if (busy) return;
+    var cells = turn === 0 ? PAIR_A : PAIR_B;
+    var a = fi(cursor), b = fi(cursor + 1);
+    cursor = fi(cursor + 2);
+    turn = 1 - turn;
+    wipeSwap(cells, [a, b], null);
   }
 
   function startAuto() {
     clearInterval(autoTimer);
-    autoTimer = setInterval(function(){ goTo(page + 1, true); }, 4000);
+    autoTimer = setInterval(autoTick, 3000);
   }
+
+  // Initial cell setup: Pair A gets imgs[0,1], Pair B gets imgs[2,3]
+  setCell(0, 0); setCell(3, 1); setCell(1, 2); setCell(2, 3);
 
   // Lightbox
   var lb = document.createElement('div');
   lb.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;pointer-events:none';
 
+  var lbWrap = document.createElement('div');
+  lbWrap.style.cssText = 'position:relative;display:inline-flex;align-items:center';
+
   var lbImg = document.createElement('img');
-  lbImg.style.cssText = 'max-width:58vw;max-height:58vh;object-fit:contain;display:block;transition:opacity .2s';
+  lbImg.style.cssText = 'max-width:58vw;max-height:58vh;object-fit:contain;display:block';
 
   function lbBtn(html, css) {
     var b = document.createElement('button');
@@ -1513,11 +1509,8 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     return b;
   }
 
-  var lbWrap = document.createElement('div');
-  lbWrap.style.cssText = 'position:relative;display:inline-flex;align-items:center';
-
-  var lbPrev = lbBtn('&#8592;', 'position:absolute;left:-60px;top:50%;transform:translateY(-50%);flex-shrink:0');
-  var lbNext = lbBtn('&#8594;', 'position:absolute;right:-60px;top:50%;transform:translateY(-50%);flex-shrink:0');
+  var lbPrev = lbBtn('&#8592;', 'position:absolute;left:-60px;top:50%;transform:translateY(-50%)');
+  var lbNext = lbBtn('&#8594;', 'position:absolute;right:-60px;top:50%;transform:translateY(-50%)');
   var lbClose = lbBtn('&#10005;', 'position:fixed;top:20px;right:20px;border:none;font-size:22px;opacity:0.5');
 
   var lbCount = document.createElement('span');
@@ -1529,14 +1522,14 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
 
   function lbOpen(idx) {
     clearInterval(autoTimer);
-    lbIdx = idx;
+    lbIdx = fi(idx);
     lbImg.src = 'galeria/' + encodeURIComponent(imgs[lbIdx]);
     lbCount.textContent = (lbIdx + 1) + ' / ' + imgs.length;
     lb.style.opacity = '1'; lb.style.pointerEvents = 'all';
   }
 
   function lbGo(idx) {
-    lbIdx = ((idx % imgs.length) + imgs.length) % imgs.length;
+    lbIdx = fi(idx);
     lbImg.src = 'galeria/' + encodeURIComponent(imgs[lbIdx]);
     lbCount.textContent = (lbIdx + 1) + ' / ' + imgs.length;
   }
@@ -1558,19 +1551,30 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     if (e.key === 'ArrowRight') lbGo(lbIdx + 1);
   });
 
-  for (var i = 0; i < per; i++) {
+  for (var i = 0; i < 4; i++) {
     (function(ci){
       document.getElementById('gal-img-' + ci).parentElement.addEventListener('click', function(){
-        var idx = page * per + ci;
-        if (imgs[idx]) lbOpen(idx);
+        lbOpen(cellImg[ci]);
       });
     })(i);
   }
 
-  document.getElementById('gal-prev').addEventListener('click', function(){ goTo(page - 1, true); startAuto(); });
-  document.getElementById('gal-next').addEventListener('click', function(){ goTo(page + 1, true); startAuto(); });
+  // prev/next: az összes 4 kocka egyszerre vált
+  function jumpAll(dir) {
+    clearInterval(autoTimer);
+    cursor = fi(cursor + dir * 4);
+    turn = 0;
+    var a = fi(cursor), b = fi(cursor+1), c = fi(cursor+2), d = fi(cursor+3);
+    cursor = fi(cursor + 4);
+    wipeSwap([0, 3, 1, 2], [a, b, c, d], startAuto);
+  }
 
-  goTo(0, false);
+  document.getElementById('gal-prev').addEventListener('click', function(){ jumpAll(-2); });
+  document.getElementById('gal-next').addEventListener('click', function(){ jumpAll(1); });
+  document.getElementById('gal-counter').style.display = 'none';
+  document.getElementById('gal-prev').disabled = false;
+  document.getElementById('gal-next').disabled = false;
+
   startAuto();
 })();
 // Safari video autoplay fix
