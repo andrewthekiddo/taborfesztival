@@ -268,7 +268,8 @@ section{padding:80px 32px}
 .gal-btn:hover{border-color:#fff;color:#fff}
 .gal-btn:disabled{opacity:0.2;cursor:default;pointer-events:none}
 .gal-counter{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--muted);text-transform:uppercase;min-width:60px;text-align:center}
-.ycell-wipe{position:absolute;inset:0;background:#FFC400;transform:scaleY(0);transform-origin:bottom;z-index:2;pointer-events:none}
+.ycell-wipe{position:absolute;inset:0;background:#FFC400;transform:scaleY(0);transform-origin:bottom;z-index:2;pointer-events:none;display:flex;align-items:center;justify-content:center}
+.ycell-wipe-logo{width:65%;max-width:130px;filter:invert(1);opacity:0.85;pointer-events:none}
 
 
 #galeria .eyebrow{color:rgba(255,255,255,0.65)}
@@ -772,10 +773,10 @@ footer{background:var(--off);border-top:1px solid var(--border);padding:24px 32p
   <div class="eyebrow">Emlékek</div>
   <h2 class="stitle">GALÉRIA</h2>
   <div class="ygrid" id="gal-grid" style="grid-template-columns:repeat(2,1fr)">
-    <div class="ycell"><img id="gal-img-0" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-0" class="ycell-wipe"></div></div>
-    <div class="ycell"><img id="gal-img-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-1" class="ycell-wipe"></div></div>
-    <div class="ycell"><img id="gal-img-2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-2" class="ycell-wipe"></div></div>
-    <div class="ycell"><img id="gal-img-3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-3" class="ycell-wipe"></div></div>
+    <div class="ycell"><img id="gal-img-0" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-0" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
+    <div class="ycell"><img id="gal-img-1" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-1" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
+    <div class="ycell"><img id="gal-img-2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-2" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
+    <div class="ycell"><img id="gal-img-3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div id="gal-wipe-3" class="ycell-wipe"><img src="taborfeszt.png" class="ycell-wipe-logo"></div></div>
   </div>
   <div class="gal-nav">
     <button class="gal-btn" id="gal-prev">&#8592;</button>
@@ -1463,7 +1464,7 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     setTimeout(function() {
       indices.forEach(function(ci) {
         var w = document.getElementById('gal-wipe-' + ci);
-        w.style.transition = 'transform 0.24s cubic-bezier(0.55,0,0.45,1)';
+        w.style.transition = 'transform 0.34s cubic-bezier(0.55,0,0.45,1)';
         w.style.transform = 'scaleY(1)';
       });
       setTimeout(function() {
@@ -1473,7 +1474,7 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
           w.style.transform = 'scaleY(0)';
         });
         if (done) done();
-      }, 250);
+      }, 350);
     }, delay);
   }
 
@@ -1482,8 +1483,9 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     if (!animate) { page = target; updateCells(); return; }
     if (animating) return;
     animating = true;
-    wipePair([0, 3], 0, target, null);
-    wipePair([1, 2], 120, target, function() {
+    // bal alsó (2) + jobb felső (1) egyszerre, majd bal felső (0) + jobb alsó (3)
+    wipePair([1, 2], 0, target, null);
+    wipePair([0, 3], 160, target, function() {
       page = target;
       updateNav();
       animating = false;
