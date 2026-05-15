@@ -7,6 +7,14 @@
 <title>TÁBOR Fesztivál 2026 – Augusztus 26–29. Alsóörs</title>
 <link rel="icon" type="image/png" href="icon.png?v=2">
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
+<!-- Meta Pixel Code -->
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '940012236371499');
+fbq('track', 'PageView');</script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=940012236371499&ev=PageView&noscript=1" /></noscript>
+<!-- End Meta Pixel Code -->
 <style>
 @font-face {
   font-family: 'Aggregate';
@@ -1697,6 +1705,41 @@ document.querySelectorAll('.gyik-q').forEach(function(btn) {
     if (!isOpen) item.classList.add('open');
   });
 });
+</script>
+<script>
+// Meta CAPI Client-Side Tracking
+(function() {
+  const pixelId = '940012236371499';
+  let fbp = localStorage.getItem('_fbp');
+  if (!fbp) {
+    fbp = 'fb.' + Date.now() + '.' + Math.floor(Math.random() * 1000000000);
+    localStorage.setItem('_fbp', fbp);
+  }
+
+  function trackEvent(eventName, customData = {}) {
+    fbq?.('track', eventName, customData);
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon('/api/track-conversion', JSON.stringify({
+        eventName,
+        eventData: {
+          fbp,
+          fbc: document.cookie.match('_fbc=([^;]+)') ? document.cookie.match('_fbc=([^;]+)')[1] : '',
+          url: window.location.href,
+          customData,
+        },
+      }));
+    }
+  }
+
+  // Track common conversions
+  document.querySelectorAll('a[href*="jegy.rock1.hu"]').forEach(link => {
+    link.addEventListener('click', function() {
+      trackEvent('AddToCart', { value: 'ticket', currency: 'HUF' });
+    });
+  });
+
+  window.capiTrack = trackEvent;
+})();
 </script>
 </body>
 </html>
