@@ -269,7 +269,7 @@ section{padding:80px 32px}
 .gal-btn:disabled{opacity:0.2;cursor:default;pointer-events:none}
 .gal-counter{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;color:var(--muted);text-transform:uppercase;min-width:60px;text-align:center}
 .ycell-wipe{position:absolute;inset:0;background:#FFC400;transform:scaleY(0);transform-origin:bottom;z-index:2;pointer-events:none;display:flex;align-items:center;justify-content:center}
-.ycell-wipe-logo{width:65%;max-width:130px;filter:invert(1);opacity:0.85;pointer-events:none}
+.ycell-wipe-logo{width:75%;filter:invert(1);opacity:0.9;pointer-events:none}
 
 
 #galeria .eyebrow{color:rgba(255,255,255,0.65)}
@@ -1461,7 +1461,7 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     busy = true;
     cells.forEach(function(ci) {
       var w = document.getElementById('gal-wipe-' + ci);
-      w.style.transition = 'transform 0.34s cubic-bezier(0.55,0,0.45,1)';
+      w.style.transition = 'transform 0.44s cubic-bezier(0.55,0,0.45,1)';
       w.style.transform = 'scaleY(1)';
     });
     setTimeout(function() {
@@ -1469,8 +1469,8 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
       cells.forEach(function(ci) {
         document.getElementById('gal-wipe-' + ci).style.transform = 'scaleY(0)';
       });
-      setTimeout(function() { busy = false; if (done) done(); }, 350);
-    }, 360);
+      setTimeout(function() { busy = false; if (done) done(); }, 450);
+    }, 460);
   }
 
   function autoTick() {
