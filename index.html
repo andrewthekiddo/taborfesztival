@@ -1485,14 +1485,18 @@ document.querySelectorAll('.ticket-group-label').forEach(function(label) {
     return b;
   }
 
-  var lbPrev = lbBtn('&#8592;', 'position:absolute;left:20px;top:50%;transform:translateY(-50%)');
-  var lbNext = lbBtn('&#8594;', 'position:absolute;right:20px;top:50%;transform:translateY(-50%)');
-  var lbClose = lbBtn('&#10005;', 'position:absolute;top:20px;right:20px;border:none;font-size:22px;opacity:0.5');
+  var lbWrap = document.createElement('div');
+  lbWrap.style.cssText = 'position:relative;display:inline-flex;align-items:center';
+
+  var lbPrev = lbBtn('&#8592;', 'position:absolute;left:-60px;top:50%;transform:translateY(-50%);flex-shrink:0');
+  var lbNext = lbBtn('&#8594;', 'position:absolute;right:-60px;top:50%;transform:translateY(-50%);flex-shrink:0');
+  var lbClose = lbBtn('&#10005;', 'position:fixed;top:20px;right:20px;border:none;font-size:22px;opacity:0.5');
 
   var lbCount = document.createElement('span');
-  lbCount.style.cssText = 'position:absolute;bottom:20px;left:50%;transform:translateX(-50%);font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.35);text-transform:uppercase';
+  lbCount.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);font-family:\'Barlow Condensed\',sans-serif;font-size:13px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.35);text-transform:uppercase';
 
-  lb.appendChild(lbImg); lb.appendChild(lbPrev); lb.appendChild(lbNext); lb.appendChild(lbClose); lb.appendChild(lbCount);
+  lbWrap.appendChild(lbPrev); lbWrap.appendChild(lbImg); lbWrap.appendChild(lbNext);
+  lb.appendChild(lbWrap); lb.appendChild(lbClose); lb.appendChild(lbCount);
   document.body.appendChild(lb);
 
   function lbOpen(idx) {
